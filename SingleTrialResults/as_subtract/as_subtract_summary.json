@@ -1,0 +1,79 @@
+[
+  {
+    "value": 0.0,
+    "average_as_prop": 0.28271956227982475,
+    "sd_as_prop": 0.013554548767197097,
+    "final_population": 1482,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.0_aasub0.1"
+  },
+  {
+    "value": 0.01,
+    "average_as_prop": 0.25959950636758083,
+    "sd_as_prop": 0.016272763186088772,
+    "final_population": 1470,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.01_aasub0.1"
+  },
+  {
+    "value": 0.02,
+    "average_as_prop": 0.23043276861202053,
+    "sd_as_prop": 0.011987791477660494,
+    "final_population": 1473,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.02_aasub0.1"
+  },
+  {
+    "value": 0.03,
+    "average_as_prop": 0.22470880915595223,
+    "sd_as_prop": 0.011570481381502492,
+    "final_population": 1459,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.03_aasub0.1"
+  },
+  {
+    "value": 0.04,
+    "average_as_prop": 0.197478586634096,
+    "sd_as_prop": 0.014233969161770407,
+    "final_population": 1464,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.04_aasub0.1"
+  },
+  {
+    "value": 0.05,
+    "average_as_prop": 0.17108708898793315,
+    "sd_as_prop": 0.01969868389531765,
+    "final_population": 1448,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.05_aasub0.1"
+  },
+  {
+    "value": 0.06,
+    "average_as_prop": 0.14754061844081878,
+    "sd_as_prop": 0.012436893653605612,
+    "final_population": 1443,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.06_aasub0.1"
+  },
+  {
+    "value": 0.07,
+    "average_as_prop": 0.054310085491117426,
+    "sd_as_prop": 0.005403131388186296,
+    "final_population": 1417,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.07_aasub0.1"
+  },
+  {
+    "value": 0.08,
+    "average_as_prop": 0.054310085491117426,
+    "sd_as_prop": 0.005403131388186296,
+    "final_population": 1417,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.08_aasub0.1"
+  },
+  {
+    "value": 0.09,
+    "average_as_prop": 0.05007572469734638,
+    "sd_as_prop": 0.004645347557419556,
+    "final_population": 1413,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.09_aasub0.1"
+  },
+  {
+    "value": 0.1,
+    "average_as_prop": 0.04997713205800748,
+    "sd_as_prop": 0.004525766576397881,
+    "final_population": 1416,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.1_aasub0.1"
+  }
+]
