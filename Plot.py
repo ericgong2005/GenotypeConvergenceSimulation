@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 SUMMARY_WINDOW = 1000
 RESULTS_ROOT = "MultiTrialResults"
 
+# Base everything on the AS phenotype frequency given that we assume SS (Heterozygous recessive) does not surive to adulthood
 PLOT_LABELS = {
     "initial_pop": "Initial Population Size",
     "as_fraction": "Initial AS Phenotype Proportion",
@@ -14,8 +15,6 @@ PLOT_LABELS = {
     "as_subtract": "Malarial Fatality for AS Phenotype Children Under 5",
     "aa_subtract": "Malarial Fatality for AA Phenotype Children Under 5",
 }
-# ------------------------------------------
-
 
 MEAN_Y_LABEL = "Average Converged Proportion of AS Phenotype"
 SD_Y_LABEL = "Standard Deviation of Converged AS Phenotype Proportion"
@@ -29,7 +28,7 @@ def plot_ablation_summary(results_df, variable_name, output_dir):
     x = results_df["value"]
     xlabel = get_xlabel(variable_name)
 
-    # ---- Mean plot ----
+    # Mean AS proportion
     fig, ax = plt.subplots(figsize=(8, 5))
     ax.errorbar(
         x,
@@ -44,7 +43,7 @@ def plot_ablation_summary(results_df, variable_name, output_dir):
     plt.savefig(os.path.join(output_dir, f"{variable_name}_mean_as.png"), dpi=150)
     plt.close()
 
-    # ---- Stability plot ----
+    # SD of AS proportion when stabilized (measures random genetic drift)
     fig, ax = plt.subplots(figsize=(8, 5))
     ax.errorbar(
         x,

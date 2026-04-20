@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 
 from Constants import FiveYearSurvivalProbability as SURVIVAL_DATA
 
+# Simulation parameters
 N_AGES = 27
 MAX_STEPS = 2000
 SUMMARY_WINDOW = 1000
@@ -25,7 +26,7 @@ def load_survivals(csv_path, column, as_subtract, aa_subtract):
     survival_AS = base.copy()
     survival_AA = base.copy()
 
-    # subtract from 0-5 survival only
+    # subtract from 0-5 survival only: Malaria disproportionately affects those under 5
     survival_AS[0] = max(0.0, survival_AS[0] - as_subtract)
     survival_AA[0] = max(0.0, survival_AA[0] - aa_subtract)
 
@@ -58,7 +59,8 @@ def initial_population(survival, total_pop, as_fraction):
 
 def fertility_weights():
     w = np.zeros(N_AGES, dtype=float)
-    w[3:11] = 1.0  # ages 15-50 inclusive
+    # ages 15-50 inclusive for reproductive age, assume uniform across ages
+    w[3:11] = 1.0  
     return w
 
 
@@ -391,6 +393,8 @@ def run_ablation(variable_name, values, baseline_params, results_root):
     for value in values:
         params = baseline_params.copy()
         params[variable_name] = value
+
+        # For changing the fatality of Malaria, assume heterozygote always confers 90% increased fitness
         if variable_name == "aa_subtract":
             params["as_subtract"] = value / 10
 
@@ -439,12 +443,22 @@ def main():
         "aa_subtract": 0.1,
     }
 
+    # How does population size affect steady-state (holds fraction with AS at 0.05)
     initial_pop_ablation = [100, 250, 500, 750, 1000, 2500, 5000, 7500, 10000]
+
+    # How does changing proportion with AS affect steady-state, constant population of 1000
     as_fraction_ablation = [0.01, 0.05, 0.1, 0.25, 0.5, 0.75, 1.0]
+
+    # How does the baseline life expectancy (other causes of death) change steady-state
     life_expectancy_ablation = ["20.0", "25.0", "30.0", "35.0", "40.0", "45.0", "50.0", "55.0", "60.0"]
+
+    # How does changing the relative fitness confered by AS affect steady state
     as_subtract_ablation = [0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
+
+    # How does changing the fatality rate of Malaria affect steady state
     aa_subtract_ablation = [0.1, 0.2, 0.3, 0.4, 0.5]
 
+    # Parallelism for faster execution
     ctx = mp.get_context("spawn")
     processes = [
         ctx.Process(
