@@ -436,27 +436,27 @@ def main():
     os.makedirs("Results", exist_ok=True)
 
     baseline_params = {
-        "initial_pop": 1000,
-        "as_fraction": 0.05,
+        "initial_pop": 5000,
+        "as_fraction": 0.01,
         "life_expectancy": "25.0",
         "as_subtract": 0.01,
         "aa_subtract": 0.1,
     }
 
     # How does population size affect steady-state (holds fraction with AS at 0.05)
-    initial_pop_ablation = [100, 250, 500, 750, 1000, 2500, 5000, 7500, 10000]
+    initial_pop_ablation = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
 
     # How does changing proportion with AS affect steady-state, constant population of 1000
-    as_fraction_ablation = [0.01, 0.05, 0.1, 0.25, 0.5, 0.75, 1.0]
+    as_fraction_ablation = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 
     # How does the baseline life expectancy (other causes of death) change steady-state
-    life_expectancy_ablation = ["20.0", "25.0", "30.0", "35.0", "40.0", "45.0", "50.0", "55.0", "60.0"]
+    life_expectancy_ablation = ["20.0", "22.5", "25.0", "27.5", "30.0", "32.5", "35.0", "37.5", "40.0", "42.5", "45.0", "47.5", "50.0", "52.5", "55.0", "57.5", "60.0", "62.5", "65.0", "67.5", "70.0", "72.5", "75.0", "77.5", "80.0"]
 
     # How does changing the relative fitness confered by AS affect steady state
-    as_subtract_ablation = [0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
+    as_subtract_ablation = [0.0, 0.005, 0.01, 0.015, 0.02, 0.025, 0.03, 0.035, 0.04, 0.045, 0.05, 0.055, 0.06, 0.065, 0.07, 0.075, 0.08, 0.085, 0.09, 0.095, 0.1]
 
     # How does changing the fatality rate of Malaria affect steady state
-    aa_subtract_ablation = [0.1, 0.2, 0.3, 0.4, 0.5]
+    aa_subtract_ablation = [0.0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5]
 
     # Parallelism for faster execution
     ctx = mp.get_context("spawn")

@@ -1,0 +1,112 @@
+[
+  {
+    "value": 0.0,
+    "mean_average_as_prop": 0.28598648761653306,
+    "sd_average_as_prop": 0.004994424112474456,
+    "mean_sd_as_prop": 0.0175504091864502,
+    "sd_sd_as_prop": 0.0024489012027185666,
+    "mean_final_population": 1490.89,
+    "sd_final_population": 8.324536023106633,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.0_aasub0.1"
+  },
+  {
+    "value": 0.01,
+    "mean_average_as_prop": 0.2633268124737143,
+    "sd_average_as_prop": 0.005327924469104088,
+    "mean_sd_as_prop": 0.017999159970544992,
+    "sd_sd_as_prop": 0.002289629433984972,
+    "mean_final_population": 1476.13,
+    "sd_final_population": 6.497160918431988,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.01_aasub0.1"
+  },
+  {
+    "value": 0.02,
+    "mean_average_as_prop": 0.2436279231227958,
+    "sd_average_as_prop": 0.005015420271081575,
+    "mean_sd_as_prop": 0.016929053235196157,
+    "sd_sd_as_prop": 0.002437923423945553,
+    "mean_final_population": 1464.24,
+    "sd_final_population": 6.387675633593178,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.02_aasub0.1"
+  },
+  {
+    "value": 0.03,
+    "mean_average_as_prop": 0.22518861464954118,
+    "sd_average_as_prop": 0.004197619635479838,
+    "mean_sd_as_prop": 0.015034155253654096,
+    "sd_sd_as_prop": 0.002440771721301381,
+    "mean_final_population": 1459.23,
+    "sd_final_population": 7.799814100348802,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.03_aasub0.1"
+  },
+  {
+    "value": 0.04,
+    "mean_average_as_prop": 0.20656134287866063,
+    "sd_average_as_prop": 0.007731541867956241,
+    "mean_sd_as_prop": 0.018092131567678946,
+    "sd_sd_as_prop": 0.003740468199135043,
+    "mean_final_population": 1456.45,
+    "sd_final_population": 7.576773719730582,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.04_aasub0.1"
+  },
+  {
+    "value": 0.05,
+    "mean_average_as_prop": 0.16133081740067642,
+    "sd_average_as_prop": 0.02677879164306056,
+    "mean_sd_as_prop": 0.024026275382473435,
+    "sd_sd_as_prop": 0.010751532981384468,
+    "mean_final_population": 1449.09,
+    "sd_final_population": 5.901008388402783,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.05_aasub0.1"
+  },
+  {
+    "value": 0.06,
+    "mean_average_as_prop": 0.10294119190923125,
+    "sd_average_as_prop": 0.041274065530300844,
+    "mean_sd_as_prop": 0.016468893501258453,
+    "sd_sd_as_prop": 0.011820465833675044,
+    "mean_final_population": 1435.68,
+    "sd_final_population": 11.455025098182894,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.06_aasub0.1"
+  },
+  {
+    "value": 0.07,
+    "mean_average_as_prop": 0.05726345213986061,
+    "sd_average_as_prop": 0.0029588126012337953,
+    "mean_sd_as_prop": 0.006372648308277047,
+    "sd_sd_as_prop": 0.00304908392643373,
+    "mean_final_population": 1421.52,
+    "sd_final_population": 7.293120045632049,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.07_aasub0.1"
+  },
+  {
+    "value": 0.08,
+    "mean_average_as_prop": 0.058396785590680705,
+    "sd_average_as_prop": 0.009566023642141862,
+    "mean_sd_as_prop": 0.006810816613724048,
+    "sd_sd_as_prop": 0.004204561234302227,
+    "mean_final_population": 1424.11,
+    "sd_final_population": 7.519168837045754,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.08_aasub0.1"
+  },
+  {
+    "value": 0.09,
+    "mean_average_as_prop": 0.05153819553268482,
+    "sd_average_as_prop": 0.0007143968652251626,
+    "mean_sd_as_prop": 0.004727593565651268,
+    "sd_sd_as_prop": 0.00048468261006297876,
+    "mean_final_population": 1421.94,
+    "sd_final_population": 7.464341899993596,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.09_aasub0.1"
+  },
+  {
+    "value": 0.1,
+    "mean_average_as_prop": 0.0515381931870126,
+    "sd_average_as_prop": 0.0007248987237794743,
+    "mean_sd_as_prop": 0.00465830920898498,
+    "sd_sd_as_prop": 0.0003997521152839093,
+    "mean_final_population": 1423.04,
+    "sd_final_population": 7.731649241914689,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.1_aasub0.1"
+  }
+]

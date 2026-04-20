@@ -1,0 +1,72 @@
+[
+  {
+    "value": 0.01,
+    "mean_average_as_prop": 0.2646478122067494,
+    "sd_average_as_prop": 0.006150092130679822,
+    "mean_sd_as_prop": 0.018310247464442334,
+    "sd_sd_as_prop": 0.002540813836280471,
+    "mean_final_population": 1476.57,
+    "sd_final_population": 7.4662641260539395,
+    "run_name": "pop1000_asfrac0.01_lifeexp25.0_assub0.01_aasub0.1"
+  },
+  {
+    "value": 0.05,
+    "mean_average_as_prop": 0.2639356012206537,
+    "sd_average_as_prop": 0.006269557261880926,
+    "mean_sd_as_prop": 0.01752357087765964,
+    "sd_sd_as_prop": 0.002558221172703482,
+    "mean_final_population": 1475.2,
+    "sd_final_population": 6.586349520030045,
+    "run_name": "pop1000_asfrac0.05_lifeexp25.0_assub0.01_aasub0.1"
+  },
+  {
+    "value": 0.1,
+    "mean_average_as_prop": 0.2634677792571486,
+    "sd_average_as_prop": 0.005501571809138944,
+    "mean_sd_as_prop": 0.018206321757511877,
+    "sd_sd_as_prop": 0.0026719495535268145,
+    "mean_final_population": 1476.18,
+    "sd_final_population": 6.378683249699738,
+    "run_name": "pop1000_asfrac0.1_lifeexp25.0_assub0.01_aasub0.1"
+  },
+  {
+    "value": 0.25,
+    "mean_average_as_prop": 0.2641087227389631,
+    "sd_average_as_prop": 0.004999041570542778,
+    "mean_sd_as_prop": 0.018084590825833004,
+    "sd_sd_as_prop": 0.002306435667482554,
+    "mean_final_population": 1475.77,
+    "sd_final_population": 6.782116188919208,
+    "run_name": "pop1000_asfrac0.25_lifeexp25.0_assub0.01_aasub0.1"
+  },
+  {
+    "value": 0.5,
+    "mean_average_as_prop": 0.26395526532222524,
+    "sd_average_as_prop": 0.00605719079849829,
+    "mean_sd_as_prop": 0.017836443058447487,
+    "sd_sd_as_prop": 0.0024834519552260565,
+    "mean_final_population": 1474.37,
+    "sd_final_population": 7.191182100322587,
+    "run_name": "pop1000_asfrac0.5_lifeexp25.0_assub0.01_aasub0.1"
+  },
+  {
+    "value": 0.75,
+    "mean_average_as_prop": 0.26402538311064233,
+    "sd_average_as_prop": 0.00544939893995643,
+    "mean_sd_as_prop": 0.018067129540426188,
+    "sd_sd_as_prop": 0.0027026937189347407,
+    "mean_final_population": 1475.66,
+    "sd_final_population": 7.559391509903426,
+    "run_name": "pop1000_asfrac0.75_lifeexp25.0_assub0.01_aasub0.1"
+  },
+  {
+    "value": 1.0,
+    "mean_average_as_prop": 0.26447125046097303,
+    "sd_average_as_prop": 0.005895777354636146,
+    "mean_sd_as_prop": 0.01785495752949517,
+    "sd_sd_as_prop": 0.002731302569548592,
+    "mean_final_population": 1475.59,
+    "sd_final_population": 6.120612714426554,
+    "run_name": "pop1000_asfrac1.0_lifeexp25.0_assub0.01_aasub0.1"
+  }
+]

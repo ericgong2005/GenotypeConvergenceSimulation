@@ -12,12 +12,12 @@ PLOT_LABELS = {
     "initial_pop": "Initial Population Size",
     "as_fraction": "Initial AS Phenotype Proportion",
     "life_expectancy": "Baseline Life Expectancy",
-    "as_subtract": "Malarial Fatality for AS Phenotype Children Under 5",
-    "aa_subtract": "Malarial Fatality for AA Phenotype Children Under 5",
+    "as_subtract": "Relative Fatality for Children Under 5 with the AS Phenotype",
+    "aa_subtract": "Absolute Malarial Fatality for Children Under 5 with the AA Phenotype",
 }
 
-MEAN_Y_LABEL = "Average Converged Proportion of AS Phenotype"
-SD_Y_LABEL = "Standard Deviation of Converged AS Phenotype Proportion"
+MEAN_Y_LABEL = "Average Steady State Proportion of AS Phenotype"
+SD_Y_LABEL = "Standard Deviation of Steady State AS Phenotype Proportion"
 
 
 def get_xlabel(variable_name):
@@ -39,6 +39,8 @@ def plot_ablation_summary(results_df, variable_name, output_dir):
     )
     ax.set_xlabel(xlabel)
     ax.set_ylabel(MEAN_Y_LABEL)
+    if variable_name == "life_expectancy":
+        ax.set_xticks(x[::2])
     plt.tight_layout()
     plt.savefig(os.path.join(output_dir, f"{variable_name}_mean_as.png"), dpi=150)
     plt.close()
@@ -54,6 +56,8 @@ def plot_ablation_summary(results_df, variable_name, output_dir):
     )
     ax.set_xlabel(xlabel)
     ax.set_ylabel(SD_Y_LABEL)
+    if variable_name == "life_expectancy":
+        ax.set_xticks(x[::2])
     plt.tight_layout()
     plt.savefig(os.path.join(output_dir, f"{variable_name}_genotypic_stability.png"), dpi=150)
     plt.close()
