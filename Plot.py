@@ -5,7 +5,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 SUMMARY_WINDOW = 1000
-RESULTS_ROOT = "MultiTrialResults"
+RESULTS_ROOT = "MalariaFreeResult"
 
 # Base everything on the AS phenotype frequency given that we assume SS (Heterozygous recessive) does not surive to adulthood
 PLOT_LABELS = {
