@@ -1,0 +1,40 @@
+---
+output:
+  pdf_document: default
+---
+
+Notes:
+
+
+https://pubmed.ncbi.nlm.nih.gov/32552891/
+Parasite prevalence gradually increased from childhood, reaching 12% by 9 years of age then declining through adolescence into adulthood. The incidence rate of RDT positivity in the OPD followed a similar trend to that of infection prevalence in the community. The incidence of hospitalized malaria from the same community was concentrated among children aged 6 months to 4 years (i.e. 64% and 70% of all hospitalized and severe malaria during the 12 months of surveillance, respectively). Only 3.7% (12/316) of deaths were directly attributable to malaria. Malaria mortality was highest among children aged 6 months-4 years at 0.57 per 1000 person-years (95% CI 0.2, 1.2). Severe malaria and death from malaria was negligible above 15 years of age.
+https://www.ncbi.nlm.nih.gov/books/NBK1688/
+approximately + 10% chance of death by malaria from 0 to 5, 
+https://www.thelancet.com/journals/eclinm/article/PIIS2589-5370(23)00556-4/fulltext#fig1
+everyone gets malaria
+https://pmc.ncbi.nlm.nih.gov/articles/PMC5832208/
+Sickle cell: Of the recruited 311 subjects, 292 (93.9%) survived to 1 year, 269 (87.1%) to 5 years, 239 (82.5%) to 10 years, 186 (74.9%) to 20 years, 152 (65.5%) to 30 years and 47 (55.2%) have so far survived to 40 years. Survival to 18 years occurred in 196 subjects (76.9%, 95% CI 71.6, 81.3) with no gender difference (female n = 90/149 survivors, 76.2%, 95% 68.3, 82.4; male n = 106/162 survivors, 77.5%, 95% CI 70.1, 83.3; log rank test, p = 0.66). The percentages represent survival proportions, calculated from the Kaplan-Meier function that accounts for censored observations; they differ from percentages calculated by simple divisions. Although half the Cohort patients have now died, the upper limit of the 95% survival confidence interval cannot yet be calculated. Current data indicate a Kaplain-Meier median survival for the whole cohort of 42.3 years (95% CI 37.2, unknown), for males of 40.2 years (95% CI 34.7, unknown) and the median for females has not yet been reached.
+https://www.researchgate.net/publication/11403119_Protective_Effects_of_the_Sickle_Cell_Gene_Against_Malaria_Morbidity_and_Mortality
+HbAA: S $\approx$ 0.78
+HbAS: S $\approx$ 0.83–0.85
+HbSS: S $\approx$ 0.73
+7% increases in survivor probability (70% protection assuming 10% infection)
+
+https://pmc.ncbi.nlm.nih.gov/articles/PMC3499995/
+mechanism
+https://pmc.ncbi.nlm.nih.gov/articles/PMC6171532/
+Morrow and Moss (2006) report on data from the Garki study, conducted in a region of high malaria transmission in Nigeria in the 1970s. Among adults, 29.0% of the population was AS, while 70.2% were AA. Among newborns, 23.6% were AS and 73.8% AA. Entering these figures in the equation above gives a value of $\beta$ = .775. More generally, Morrow and Moss report that the prevalence of the sickle cell trait in West Africa trait rises from 20–24% among newborns to 26–29% among adults.14
+https://pmc.ncbi.nlm.nih.gov/articles/PMC6171532/
+Most SS do not naturally survive to adulthood, 90% protection against fatality, 20% overall reduction. 
+https://ourworldindata.org/life-expectancy
+Life expectancy in Africas around 26, global around 29-30
+https://ojs.usp-pl.com/index.php/ADVANCES-IN-HIGHER-EDUCATION/article/viewFile/5142/4767
+Leslie model adapted
+https://www.jstor.org/stable/2332297
+original Leslie model
+https://www.sciencedirect.com/science/article/abs/pii/002555648990031X
+change fertility to stabilize population
+
+Hardyweinberg equilibrium, mendelian genetics
+
+
