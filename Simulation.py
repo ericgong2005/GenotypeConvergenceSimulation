@@ -1,16 +1,19 @@
 import os
 import json
+import time
+import multiprocessing as mp
 
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+from Constants import FiveYearSurvivalProbability as SURVIVAL_DATA
+
 N_AGES = 27
 MAX_STEPS = 2000
 SUMMARY_WINDOW = 1000
-CSV_PATH = "FiveYearSurvivalProbability.csv"
-RNG_SEED = 0
-
+N_TRIALS = 100
+LOG_INTERVAL = 25
 
 def load_survivals(csv_path, column, as_subtract, aa_subtract):
     df = pd.read_csv(csv_path)
@@ -69,14 +72,19 @@ def make_run_name(params):
     )
 
 
-def run_simulation(params, output_dir, csv_path=CSV_PATH, seed=RNG_SEED):
+def should_save_trial_artifacts(trial_num):
+    return trial_num == 1 or (trial_num % LOG_INTERVAL == 0)
+
+
+def run_single_trial(params, output_dir, trial_num, csv_path=SURVIVAL_DATA):
+    seed = time.time_ns()
     rng = np.random.default_rng(seed)
 
     os.makedirs(output_dir, exist_ok=True)
 
     run_name = make_run_name(params)
-    output_csv = os.path.join(output_dir, f"{run_name}.csv")
-    output_png = os.path.join(output_dir, f"{run_name}.png")
+    output_csv = os.path.join(output_dir, f"{run_name}_trial{trial_num}.csv")
+    output_png = os.path.join(output_dir, f"{run_name}_trial{trial_num}.png")
 
     initial_pop = params["initial_pop"]
     as_fraction = params["as_fraction"]
@@ -188,33 +196,101 @@ def run_simulation(params, output_dir, csv_path=CSV_PATH, seed=RNG_SEED):
         pop = new_pop
 
     df = pd.DataFrame(rows)
-    df.to_csv(output_csv, index=False)
 
     tail = np.array(as_prop_history[-SUMMARY_WINDOW:])
     average_as_prop = float(np.mean(tail))
     sd_as_prop = float(np.std(tail))
     final_population = int(pop.sum())
 
+    if should_save_trial_artifacts(trial_num):
+        df.to_csv(output_csv, index=False)
+
+        param_text = (
+            f"trial = {trial_num}\n"
+            f"seed = {seed}\n"
+            f"initial_pop = {initial_pop}\n"
+            f"as_fraction = {as_fraction}\n"
+            f"life_expectancy = {life_expectancy}\n"
+            f"as_subtract = {as_subtract}\n"
+            f"aa_subtract = {aa_subtract}\n"
+            f"K = {carrying_capacity}\n"
+            f"density = K / (K + N)\n"
+            f"max_steps = {MAX_STEPS}\n"
+            f"summary_window = {SUMMARY_WINDOW}\n"
+            f"avg_last_window = {average_as_prop:.6f}\n"
+            f"sd_last_window = {sd_as_prop:.6f}\n"
+            f"final_pop = {final_population}"
+        )
+
+        fig, ax = plt.subplots(figsize=(10, 5))
+        ax.plot(df["step"], df["prop_AS_population"])
+        ax.set_xlabel("Step")
+        ax.set_ylabel("Proportion AS")
+        ax.set_title("AS Proportion Over Time")
+
+        fig.subplots_adjust(right=0.72)
+        fig.text(
+            0.76,
+            0.5,
+            param_text,
+            va="center",
+            ha="left",
+            fontsize=10,
+            family="monospace",
+        )
+
+        plt.savefig(output_png, dpi=150, bbox_inches="tight")
+        plt.close()
+
+    print(
+        f"{run_name} trial {trial_num}: "
+        f"avg_last_{SUMMARY_WINDOW}={average_as_prop}, "
+        f"sd_last_{SUMMARY_WINDOW}={sd_as_prop}, "
+        f"final_pop={final_population}"
+    )
+
+    return {
+        "trial_num": trial_num,
+        "seed": int(seed),
+        "average_as_prop": average_as_prop,
+        "sd_as_prop": sd_as_prop,
+        "final_population": final_population,
+        "saved_csv_path": output_csv if should_save_trial_artifacts(trial_num) else None,
+        "saved_png_path": output_png if should_save_trial_artifacts(trial_num) else None,
+    }
+
+
+def plot_trial_average_timeseries(params, trial_dfs, output_dir, name_suffix="mean_trials"):
+    if not trial_dfs:
+        return
+
+    run_name = make_run_name(params)
+    out_png = os.path.join(output_dir, f"{run_name}_{name_suffix}.png")
+
+    prop_matrix = np.vstack([df["prop_AS_population"].to_numpy() for df in trial_dfs])
+    mean_prop = prop_matrix.mean(axis=0)
+    sd_prop = prop_matrix.std(axis=0)
+    steps = trial_dfs[0]["step"].to_numpy()
+
     param_text = (
-        f"initial_pop = {initial_pop}\n"
-        f"as_fraction = {as_fraction}\n"
-        f"life_expectancy = {life_expectancy}\n"
-        f"as_subtract = {as_subtract}\n"
-        f"aa_subtract = {aa_subtract}\n"
-        f"K = {carrying_capacity}\n"
+        f"n_trials = {len(trial_dfs)}\n"
+        f"initial_pop = {params['initial_pop']}\n"
+        f"as_fraction = {params['as_fraction']}\n"
+        f"life_expectancy = {params['life_expectancy']}\n"
+        f"as_subtract = {params['as_subtract']}\n"
+        f"aa_subtract = {params['aa_subtract']}\n"
+        f"K = {params['initial_pop']}\n"
         f"density = K / (K + N)\n"
         f"max_steps = {MAX_STEPS}\n"
-        f"summary_window = {SUMMARY_WINDOW}\n"
-        f"avg_last_window = {average_as_prop:.6f}\n"
-        f"sd_last_window = {sd_as_prop:.6f}\n"
-        f"final_pop = {final_population}"
+        f"summary_window = {SUMMARY_WINDOW}"
     )
 
     fig, ax = plt.subplots(figsize=(10, 5))
-    ax.plot(df["step"], df["prop_AS_population"])
+    ax.plot(steps, mean_prop)
+    ax.fill_between(steps, mean_prop - sd_prop, mean_prop + sd_prop, alpha=0.25)
     ax.set_xlabel("Step")
     ax.set_ylabel("Proportion AS")
-    ax.set_title("AS Proportion Over Time")
+    ax.set_title("AS Proportion Over Time (mean ± SD across trials)")
 
     fig.subplots_adjust(right=0.72)
     fig.text(
@@ -227,29 +303,62 @@ def run_simulation(params, output_dir, csv_path=CSV_PATH, seed=RNG_SEED):
         family="monospace",
     )
 
-    plt.savefig(output_png, dpi=150, bbox_inches="tight")
+    plt.savefig(out_png, dpi=150, bbox_inches="tight")
     plt.close()
 
-    print(
-        f"{run_name}: avg_last_{SUMMARY_WINDOW}={average_as_prop}, "
-        f"sd_last_{SUMMARY_WINDOW}={sd_as_prop}, final_pop={final_population}"
-    )
 
-    return {
-        "run_name": run_name,
-        "average_as_prop": average_as_prop,
-        "sd_as_prop": sd_as_prop,
-        "final_population": final_population,
-        "csv_path": output_csv,
-        "png_path": output_png,
+def run_trial_series(params, output_dir, csv_path=SURVIVAL_DATA):
+    os.makedirs(output_dir, exist_ok=True)
+
+    trial_results = []
+    saved_trial_dfs = []
+
+    for trial_num in range(1, N_TRIALS + 1):
+        result = run_single_trial(params, output_dir, trial_num, csv_path=csv_path)
+        trial_results.append(result)
+
+        if should_save_trial_artifacts(trial_num) and result["saved_csv_path"] is not None:
+            saved_trial_dfs.append(pd.read_csv(result["saved_csv_path"]))
+
+    if saved_trial_dfs:
+        plot_trial_average_timeseries(params, saved_trial_dfs, output_dir)
+
+    avg_values = [r["average_as_prop"] for r in trial_results]
+    sd_values = [r["sd_as_prop"] for r in trial_results]
+    final_pops = [r["final_population"] for r in trial_results]
+
+    summary = {
+        "run_name": make_run_name(params),
+        "params": params,
+        "n_trials": N_TRIALS,
+        "trial_results": trial_results,
+        "aggregate": {
+            "mean_average_as_prop": float(np.mean(avg_values)),
+            "sd_average_as_prop": float(np.std(avg_values)),
+            "mean_sd_as_prop": float(np.mean(sd_values)),
+            "sd_sd_as_prop": float(np.std(sd_values)),
+            "mean_final_population": float(np.mean(final_pops)),
+            "sd_final_population": float(np.std(final_pops)),
+        },
     }
+
+    with open(os.path.join(output_dir, "trial_summary.json"), "w") as f:
+        json.dump(summary, f, indent=2)
+
+    return summary
 
 
 def plot_ablation_summary(results_df, variable_name, output_dir):
     x = results_df["value"]
 
     fig, ax = plt.subplots(figsize=(8, 5))
-    ax.plot(x, results_df["average_as_prop"], marker="o")
+    ax.errorbar(
+        x,
+        results_df["mean_average_as_prop"],
+        yerr=results_df["sd_average_as_prop"],
+        marker="o",
+        capsize=4,
+    )
     ax.set_xlabel(variable_name)
     ax.set_ylabel(f"Mean AS Proportion (last {SUMMARY_WINDOW})")
     ax.set_title(f"{variable_name}: Mean AS Proportion")
@@ -258,7 +367,13 @@ def plot_ablation_summary(results_df, variable_name, output_dir):
     plt.close()
 
     fig, ax = plt.subplots(figsize=(8, 5))
-    ax.plot(x, results_df["sd_as_prop"], marker="o")
+    ax.errorbar(
+        x,
+        results_df["mean_sd_as_prop"],
+        yerr=results_df["sd_sd_as_prop"],
+        marker="o",
+        capsize=4,
+    )
     ax.set_xlabel(variable_name)
     ax.set_ylabel(f"SD of AS Proportion (last {SUMMARY_WINDOW})")
     ax.set_title(f"{variable_name}: Genotypic Stability")
@@ -279,15 +394,19 @@ def run_ablation(variable_name, values, baseline_params, results_root):
         if variable_name == "aa_subtract":
             params["as_subtract"] = value / 10
 
-        result = run_simulation(params, ablation_dir)
+        value_dir = os.path.join(ablation_dir, f"value_{value}")
+        series_summary = run_trial_series(params, value_dir)
 
         summary_rows.append(
             {
                 "value": value,
-                "average_as_prop": result["average_as_prop"],
-                "sd_as_prop": result["sd_as_prop"],
-                "final_population": result["final_population"],
-                "run_name": result["run_name"],
+                "mean_average_as_prop": series_summary["aggregate"]["mean_average_as_prop"],
+                "sd_average_as_prop": series_summary["aggregate"]["sd_average_as_prop"],
+                "mean_sd_as_prop": series_summary["aggregate"]["mean_sd_as_prop"],
+                "sd_sd_as_prop": series_summary["aggregate"]["sd_sd_as_prop"],
+                "mean_final_population": series_summary["aggregate"]["mean_final_population"],
+                "sd_final_population": series_summary["aggregate"]["sd_final_population"],
+                "run_name": series_summary["run_name"],
             }
         )
 
@@ -296,6 +415,17 @@ def run_ablation(variable_name, values, baseline_params, results_root):
         json.dump(summary_rows, f, indent=2)
 
     plot_ablation_summary(pd.DataFrame(summary_rows), variable_name, ablation_dir)
+
+
+def run_baseline_worker(baseline_params, results_root):
+    baseline_dir = os.path.join(results_root, "baseline")
+    baseline_summary = run_trial_series(baseline_params, baseline_dir)
+    with open(os.path.join(baseline_dir, "baseline_summary.json"), "w") as f:
+        json.dump(baseline_summary, f, indent=2)
+
+
+def run_ablation_worker(variable_name, values, baseline_params, results_root):
+    run_ablation(variable_name, values, baseline_params, results_root)
 
 
 def main():
@@ -309,34 +439,57 @@ def main():
         "aa_subtract": 0.1,
     }
 
-    # Fill these with whatever values you want to test.
     initial_pop_ablation = [100, 250, 500, 750, 1000, 2500, 5000, 7500, 10000]
     as_fraction_ablation = [0.01, 0.05, 0.1, 0.25, 0.5, 0.75, 1.0]
     life_expectancy_ablation = ["20.0", "25.0", "30.0", "35.0", "40.0", "45.0", "50.0", "55.0", "60.0"]
     as_subtract_ablation = [0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.1]
     aa_subtract_ablation = [0.1, 0.2, 0.3, 0.4, 0.5]
 
-    # Baseline run
-    baseline_dir = os.path.join("Results", "baseline")
-    baseline_result = run_simulation(baseline_params, baseline_dir)
-
-    baseline_summary = [
-        {
-            "average_as_prop": baseline_result["average_as_prop"],
-            "sd_as_prop": baseline_result["sd_as_prop"],
-            "final_population": baseline_result["final_population"],
-            "run_name": baseline_result["run_name"],
-        }
+    ctx = mp.get_context("spawn")
+    processes = [
+        ctx.Process(
+            target=run_baseline_worker,
+            args=(baseline_params, "Results"),
+            name="baseline",
+        ),
+        ctx.Process(
+            target=run_ablation_worker,
+            args=("initial_pop", initial_pop_ablation, baseline_params, "Results"),
+            name="initial_pop_ablation",
+        ),
+        ctx.Process(
+            target=run_ablation_worker,
+            args=("as_fraction", as_fraction_ablation, baseline_params, "Results"),
+            name="as_fraction_ablation",
+        ),
+        ctx.Process(
+            target=run_ablation_worker,
+            args=("life_expectancy", life_expectancy_ablation, baseline_params, "Results"),
+            name="life_expectancy_ablation",
+        ),
+        ctx.Process(
+            target=run_ablation_worker,
+            args=("as_subtract", as_subtract_ablation, baseline_params, "Results"),
+            name="as_subtract_ablation",
+        ),
+        ctx.Process(
+            target=run_ablation_worker,
+            args=("aa_subtract", aa_subtract_ablation, baseline_params, "Results"),
+            name="aa_subtract_ablation",
+        ),
     ]
-    with open(os.path.join(baseline_dir, "baseline_summary.json"), "w") as f:
-        json.dump(baseline_summary, f, indent=2)
 
-    # One-parameter-at-a-time ablations
-    run_ablation("initial_pop", initial_pop_ablation, baseline_params, "Results")
-    run_ablation("as_fraction", as_fraction_ablation, baseline_params, "Results")
-    run_ablation("life_expectancy", life_expectancy_ablation, baseline_params, "Results")
-    run_ablation("as_subtract", as_subtract_ablation, baseline_params, "Results")
-    run_ablation("aa_subtract", aa_subtract_ablation, baseline_params, "Results")
+    for proc in processes:
+        proc.start()
+
+    for proc in processes:
+        proc.join()
+
+    failed = [proc.name for proc in processes if proc.exitcode != 0]
+    if failed:
+        raise RuntimeError(f"These processes failed: {failed}")
+
+    print("All baseline and ablation processes completed.")
 
 
 if __name__ == "__main__":
