@@ -115,7 +115,7 @@ def run_single_trial(params, output_dir, trial_num, csv_path=SURVIVAL_DATA):
         # deterministic survival + aging, rounded to nearest int
         new_pop[0, 1:] = np.round(pop[0, :-1] * survival_AA[:-1]).astype(int)
         new_pop[1, 1:] = np.round(pop[1, :-1] * survival_AS[:-1]).astype(int)
-
+        
         # reproductive population
         aa_repro = float(np.sum(pop[0, :] * fert_w))
         as_repro = float(np.sum(pop[1, :] * fert_w))
