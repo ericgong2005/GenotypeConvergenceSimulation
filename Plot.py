@@ -5,19 +5,27 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 SUMMARY_WINDOW = 1000
-RESULTS_ROOT = "MalariaFreeResult"
+RESULTS_ROOT = "MultiTrialResults"
 
 # Base everything on the AS phenotype frequency given that we assume SS (Heterozygous recessive) does not surive to adulthood
 PLOT_LABELS = {
     "initial_pop": "Initial Population Size",
-    "as_fraction": "Initial AS Phenotype Proportion",
+    "as_fraction": "Initial AS Genotype Proportion",
     "life_expectancy": "Baseline Life Expectancy",
-    "as_subtract": "Relative Fatality for Children Under 5 with the AS Phenotype",
-    "aa_subtract": "Absolute Malarial Fatality for Children Under 5 with the AA Phenotype",
+    "as_subtract": "Absolute Fatality for Children Under 5 with the AS Genotype",
+    "aa_subtract": "Absolute Malarial Fatality for Children Under 5 with the AA Genotype",
 }
 
-MEAN_Y_LABEL = "Average Steady State Proportion of AS Phenotype"
-SD_Y_LABEL = "Standard Deviation of Steady State AS Phenotype Proportion"
+# Malaria Free
+# PLOT_LABELS = {
+#     "initial_pop": "Initial Population Size",
+#     "as_fraction": "Initial AS Genotype Proportion",
+#     "life_expectancy": "Baseline Life Expectancy",
+#     "as_subtract": "Absolute Fatality for All Individuals with the AS Genotype",
+# }
+
+MEAN_Y_LABEL = "Average Steady State Proportion of AS Genotype"
+SD_Y_LABEL = "Standard Deviation of Steady State AS Genotype Proportion"
 
 
 def get_xlabel(variable_name):

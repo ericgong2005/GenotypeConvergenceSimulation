@@ -1,5 +1,5 @@
 ---
-title: "Evolutionary Dynamics Simulations Examining Genotype-specific Fitness on Population-level Allele Frequencies"
+title: "Evolutionary Dynamics Simulations Examining the Effect of Genotype-specific Fitness on Population-level Allele Frequencies"
 author: Eric Gong
 output: pdf_document
 ---
